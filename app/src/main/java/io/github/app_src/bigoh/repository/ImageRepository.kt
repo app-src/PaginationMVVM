@@ -2,13 +2,10 @@ package io.github.app_src.bigoh.repository
 
 import android.util.Log
 import io.github.app_src.bigoh.model.ImageItem
-import io.github.app_src.bigoh.viewmodel.parseImages
 import org.json.JSONArray
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
-import java.net.MalformedURLException
 import java.net.URL
 
 class ImageRepository {

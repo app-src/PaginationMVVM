@@ -36,10 +36,9 @@ class ImageViewModel(private val imageRepository: ImageRepository) : ViewModel()
         }
 
         _isLoading.value = true
-        var job = GlobalScope.launch(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.IO) {
             try {
                 tempList = imageRepository.fetchImages(currentPage, 30).toList() // Assuming 30 items per page
-//                _images.value = _images.value.orEmpty() + newImages
 
             } catch (e: Exception) {
                 // Handle the error appropriately
@@ -62,21 +61,5 @@ class ImageViewModel(private val imageRepository: ImageRepository) : ViewModel()
         loadImages()
     }
 }
-
-    fun parseImages(json: String): List<ImageItem> {
-        val images = mutableListOf<ImageItem>()
-        val jsonArray = JSONArray(json)
-        for (i in 0 until jsonArray.length()) {
-            val jsonObject = jsonArray.getJSONObject(i)
-            val id = jsonObject.getInt("id")
-            val author = jsonObject.getString("author")
-            val width = jsonObject.getInt("width")
-            val height = jsonObject.getInt("height")
-            val url = jsonObject.getString("url")
-            val downloadUrl = jsonObject.getString("download_url")
-            images.add(ImageItem(id, author, width, height, url, downloadUrl))
-        }
-        return images
-    }
 
 

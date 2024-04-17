@@ -1,6 +1,7 @@
-package io.github.app_src.bigoh
+package io.github.app_src.bigoh.ui
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.github.app_src.bigoh.R
 import io.github.app_src.bigoh.adapter.ImageListAdapter
 import io.github.app_src.bigoh.model.ImageItem
 import io.github.app_src.bigoh.repository.ImageRepository
@@ -28,16 +30,13 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(ImageViewModel::class.java)
         viewModel = ViewModelProvider(this)[ImageViewModel::class.java]
         val itemClickListener: (ImageItem) -> Unit = { imageItem ->
-            // Handle the click event, e.g., start a new activity with the image details
-            Toast.makeText(this, "Clicked on ${imageItem.author}", Toast.LENGTH_SHORT).show()
-//            val intent = Intent(this, ImageViewActivity::class.java).apply {
-//                putExtra("EXTRA_IMAGE_URL", imageItem.downloadUrl)
-//                putExtra("EXTRA_AUTHOR_NAME", imageItem.author)
-//            }
-//            startActivity(intent)
+            val intent = Intent(this, ImageViewActivity::class.java).apply {
+                putExtra("ImageItem", imageItem)
+            }
+            startActivity(intent)
         }
 
-        adapter = ImageListAdapter(listOf(ImageItem(1,"Ashish",400,500,"https://unsplash.com/photos/yC-Yzbqy7PY","https://picsum.photos/id/0/5000/3333"),ImageItem(1,"Ashish",400,500,"https://unsplash.com/photos/yC-Yzbqy7PY","https://picsum.photos/id/0/5000/3333")),itemClickListener)
+        adapter = ImageListAdapter(listOf(), itemClickListener)
         layoutManager = LinearLayoutManager(this)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
